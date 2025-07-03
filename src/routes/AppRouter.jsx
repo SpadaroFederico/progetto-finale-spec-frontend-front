@@ -6,10 +6,9 @@ import Detail from '../pages/Detail.jsx'
 import Compare from '../pages/Compare.jsx'
 import Favorites from '../pages/Favorites.jsx'
 
-function App (){
+function AppRouter(){
   return(
     <BrowserRouter>
-        <Router>
             <Routes>
                 <Route path='/' element={<Home />}/>
                 <Route path='/pokemonItems/:id' element={<Detail />}/>
@@ -17,9 +16,8 @@ function App (){
                 <Route path='compare' element={<Compare />}/>
                 <Route path='*' element={<NotFound />}/>
             </Routes>
-        </Router>
     </BrowserRouter>
 )};
 
-export default App;
+export default AppRouter;
     
