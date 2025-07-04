@@ -1,5 +1,5 @@
 // Import delle pagine 
-import { BrowserRouter, Routes, Route, Router } from 'react-router-dom';
+import { Routes, Route, Router } from 'react-router-dom';
 import Home from '../pages/Home.jsx'
 import NotFound from '../pages/NotFound.jsx'
 import Detail from '../pages/Detail.jsx'
@@ -8,7 +8,6 @@ import Favorites from '../pages/Favorites.jsx'
 
 function AppRouter(){
   return(
-    <BrowserRouter>
             <Routes>
                 <Route path='/' element={<Home />}/>
                 <Route path='/pokemonItems/:id' element={<Detail />}/>
@@ -16,7 +15,6 @@ function AppRouter(){
                 <Route path='compare' element={<Compare />}/>
                 <Route path='*' element={<NotFound />}/>
             </Routes>
-    </BrowserRouter>
 )};
 
 export default AppRouter;

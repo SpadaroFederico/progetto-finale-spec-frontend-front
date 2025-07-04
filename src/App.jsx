@@ -1,11 +1,15 @@
 import React from "react";
-import AppRouter from './routes/AppRouter' // o dove si trova il router
-import { GlobalProvider } from "./Context/GlobalContext"; // il contesto
+import AppRouter from './routes/AppRouter' 
+import { GlobalProvider } from "./Context/GlobalContext";
+import { BrowserRouter } from "react-router-dom";
+
 
 function App() {
   return (
     <GlobalProvider>
-      <AppRouter />
+      <BrowserRouter>
+        <AppRouter />
+      </BrowserRouter>
     </GlobalProvider>
   );
 }

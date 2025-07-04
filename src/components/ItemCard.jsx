@@ -5,7 +5,7 @@ function ItemCard({ item }) {
   const imageUrl = item.image || 'https://via.placeholder.com/200x150?text=No+Image';
 
   return (
-    <div className="item-card">
+    <div className={`item-card ${item.category.toLowerCase().replace(/\s+/g, '-')}`}>
       <img
         src={imageUrl}
         alt={item.title}
