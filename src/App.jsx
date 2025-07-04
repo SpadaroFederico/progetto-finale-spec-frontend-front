@@ -1,7 +1,13 @@
-import AppRouter from './routes/AppRouter.jsx';
+import React from "react";
+import AppRouter from './routes/AppRouter' // o dove si trova il router
+import { GlobalProvider } from "./Context/GlobalContext"; // il contesto
 
 function App() {
-  return <AppRouter />;
+  return (
+    <GlobalProvider>
+      <AppRouter />
+    </GlobalProvider>
+  );
 }
 
 export default App;
