@@ -1,16 +1,15 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';  // <-- Importa useNavigate
+import { useNavigate, Link } from 'react-router-dom';
 
-const NavBar = ({ search, setSearch, sortField, setSortField, sortOrder, setSortOrder }) => {
-  const navigate = useNavigate();  // <-- Inizializza navigate
+const NavBar = ({ search, setSearch, sortField, setSortField, sortOrder, setSortOrder, favorites, compareItems }) => {
+  const navigate = useNavigate();
 
   const handleGoToCompare = () => {
-    const compareItems = JSON.parse(localStorage.getItem('compareItems')) || [];
     if (compareItems.length === 0) {
       alert('Nessun prodotto selezionato per il confronto');
       return;
     }
-    navigate('/compare');  // <-- Ora funziona
+    navigate('/compare');
   };
 
   return (
@@ -46,7 +45,13 @@ const NavBar = ({ search, setSearch, sortField, setSortField, sortOrder, setSort
         </select>
       </label>
 
-      <button onClick={handleGoToCompare}>Vai a confronto</button>
+      <button onClick={handleGoToCompare} style={{ marginLeft: '1rem' }}>
+        Vai a confronto
+      </button>
+
+      <Link to="/favorites" style={{ marginLeft: '1rem', textDecoration: 'none' }}>
+        ⭐ Preferiti ({favorites.length})
+      </Link>
     </nav>
   );
 };

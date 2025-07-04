@@ -1,6 +1,6 @@
 import React from "react";
 import AppRouter from './routes/AppRouter' 
-import { GlobalProvider } from "./Context/GlobalContext";
+import { GlobalProvider } from "./context/GlobalContext";
 import { BrowserRouter } from "react-router-dom";
 
 

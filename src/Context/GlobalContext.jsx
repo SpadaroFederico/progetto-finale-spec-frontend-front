@@ -5,6 +5,13 @@ export const useGlobalContext = () => useContext(GlobalContext);
 
 export function GlobalProvider({ children }) {
   const [items, setItems] = useState([]);
+  const [favorites, setFavorites] = useState([]);
+  const [compareItems, setCompareItems] = useState([]);
+
+  const [search, setSearch] = useState('');
+  const [sortField, setSortField] = useState('title');
+  const [sortOrder, setSortOrder] = useState('asc');
+
   const API_URL = 'http://localhost:3001';
 
   const fetchFullItems = async () => {
@@ -13,16 +20,58 @@ export function GlobalProvider({ children }) {
       const basicItems = await res.json();
 
       const detailedItems = await Promise.all(
-  basicItems.map(item =>
-    fetch(`${API_URL}/pokemonitems/${item.id}`).then(res => res.json())
-  )
-);
+        basicItems.map(item =>
+          fetch(`${API_URL}/pokemonitems/${item.id}`).then(res => res.json())
+        )
+      );
 
-// estrai solo il campo pokemonitem
-    setItems(detailedItems.map(item => item.pokemonitem));
+      setItems(detailedItems.map(item => item.pokemonitem));
     } catch (error) {
       console.error('❌ Errore nel fetch degli items completi:', error);
     }
+  };
+
+  // === FAVORITES ===
+  useEffect(() => {
+    const storedFav = JSON.parse(localStorage.getItem('favorites')) || [];
+    setFavorites(storedFav);
+  }, []);
+
+  const addToFavorites = (item) => {
+    if (favorites.some(fav => fav.id === item.id)) return;
+    const updated = [...favorites, item];
+    setFavorites(updated);
+    localStorage.setItem('favorites', JSON.stringify(updated));
+  };
+
+  const removeFromFavorites = (id) => {
+    const updated = favorites.filter(item => item.id !== id);
+    setFavorites(updated);
+    localStorage.setItem('favorites', JSON.stringify(updated));
+  };
+
+  // === COMPARE ITEMS ===
+  useEffect(() => {
+    const storedCompare = JSON.parse(localStorage.getItem('compareItems')) || [];
+    setCompareItems(storedCompare);
+  }, []);
+
+  const addToCompare = (item) => {
+    if (compareItems.some(i => i.id === item.id)) return;
+    if (compareItems.length >= 4) return; // Max 4
+    const updated = [...compareItems, item];
+    setCompareItems(updated);
+    localStorage.setItem('compareItems', JSON.stringify(updated));
+  };
+
+  const removeFromCompare = (id) => {
+    const updated = compareItems.filter(i => i.id !== id);
+    setCompareItems(updated);
+    localStorage.setItem('compareItems', JSON.stringify(updated));
+  };
+
+  const isInCompare = (id) => {
+    return compareItems.some(i => i.id === id);
   };
 
   useEffect(() => {
@@ -30,7 +79,22 @@ export function GlobalProvider({ children }) {
   }, []);
 
   return (
-    <GlobalContext.Provider value={{ items }}>
+    <GlobalContext.Provider value={{
+      items,
+      favorites,
+      addToFavorites,
+      removeFromFavorites,
+      compareItems,
+      addToCompare,
+      removeFromCompare,
+      isInCompare,
+      search,
+      setSearch,
+      sortField,
+      setSortField,
+      sortOrder,
+      setSortOrder,
+    }}>
       {children}
     </GlobalContext.Provider>
   );

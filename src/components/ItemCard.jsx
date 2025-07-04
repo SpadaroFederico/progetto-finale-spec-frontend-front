@@ -1,26 +1,30 @@
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { useGlobalContext } from '../context/GlobalContext';
+import '../style/ItemCardStyle.css'
 
 function ItemCard({ item }) {
   const [message, setMessage] = useState('');
-  const navigate = useNavigate();
+
+  const {
+    favorites,
+    addToFavorites,
+    removeFromFavorites,
+    addToCompare
+  } = useGlobalContext();
+
+  const isFavorite = favorites.some(fav => fav.id === item.id);
 
   const handleCompare = (e) => {
     e.preventDefault();
-    const existing = JSON.parse(localStorage.getItem('compareItems')) || [];
-
-    if (existing.find(i => i.id === item.id)) {
-      setMessage('Prodotto già selezionato per il confronto');
-    } else if (existing.length >= 4) {
-      setMessage('Hai raggiunto il massimo di 4 prodotti per il confronto');
-    } else {
-      const updated = [...existing, item];
-      localStorage.setItem('compareItems', JSON.stringify(updated));
-      setMessage('Prodotto aggiunto al confronto');
-    }
-
-    // Nasconde il messaggio dopo 2 secondi
+    const result = addToCompare(item);
+    setMessage(result.message);
     setTimeout(() => setMessage(''), 2000);
+  };
+
+  const handleFavorite = (e) => {
+    e.preventDefault();
+    isFavorite ? removeFromFavorites(item.id) : addToFavorites(item);
   };
 
   return (
@@ -42,6 +46,9 @@ function ItemCard({ item }) {
             {message}
           </div>
         )}
+        <button onClick={handleFavorite} style={{ marginTop: '0.5rem' }}>
+          {isFavorite ? '💔 Rimuovi dai preferiti' : '❤️ Aggiungi ai preferiti'}
+        </button>
       </div>
     </Link>
   );

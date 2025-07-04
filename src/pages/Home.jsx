@@ -1,15 +1,34 @@
-import React, { useState, useMemo } from 'react';
-import { useGlobalContext } from '../Context/GlobalContext';
+import React, { useState, useMemo, useEffect } from 'react';
+import { useGlobalContext } from '../context/GlobalContext';
 import ItemCard from '../components/ItemCard';
 import NavBar from '../components/NavBar';
 
 const categoryOrderFixed = ["card", "etb", "loose_pack", "display"];
 
 export default function Home() {
-  const { items } = useGlobalContext();
-  const [search, setSearch] = useState('');
-  const [sortField, setSortField] = useState('title'); // 'title' o 'category'
-  const [sortOrder, setSortOrder] = useState('asc');   // 'asc' o 'desc'
+  const {
+    items,
+    favorites,
+    compareItems,
+    search,
+    setSearch,
+    sortField,
+    setSortField,
+    sortOrder,
+    setSortOrder,
+  } = useGlobalContext();
+
+  // Stato locale per debounce input
+  const [searchInput, setSearchInput] = useState(search);
+
+  // Debounce effetto
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setSearch(searchInput);
+    }, 300);
+
+    return () => clearTimeout(handler);
+  }, [searchInput, setSearch]);
 
   // Filtro per ricerca (solo title)
   const filteredItems = useMemo(() => {
@@ -60,15 +79,21 @@ export default function Home() {
   return (
     <div>
       <NavBar
-        search={search}
-        setSearch={setSearch}
+        search={searchInput}
+        setSearch={setSearchInput}
         sortField={sortField}
         setSortField={setSortField}
         sortOrder={sortOrder}
         setSortOrder={setSortOrder}
+        favorites={favorites}
+        compareItems={compareItems}
       />
 
       <h1>Lista prodotti</h1>
+
+      {groupedItems.length === 0 && (
+        <p>Nessun prodotto trovato.</p>
+      )}
 
       {groupedItems.map(group => (
         group.items.length > 0 && (
