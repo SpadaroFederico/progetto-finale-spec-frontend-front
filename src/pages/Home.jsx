@@ -11,7 +11,7 @@ export default function Home() {
   const [sortField, setSortField] = useState('title'); // 'title' o 'category'
   const [sortOrder, setSortOrder] = useState('asc');   // 'asc' o 'desc'
 
-  // Filtro in base alla ricerca (su title)
+  // Filtro per ricerca (solo title)
   const filteredItems = useMemo(() => {
     if (!search) return items;
     return items.filter(item =>
@@ -19,9 +19,8 @@ export default function Home() {
     );
   }, [items, search]);
 
-  // Raggruppo i prodotti per categoria, e ordino secondo sortField e sortOrder
+  // Raggruppamento + ordinamento
   const groupedItems = useMemo(() => {
-    // Creo mappa categoria => array prodotti filtrati
     const groups = {};
 
     filteredItems.forEach(item => {
@@ -29,29 +28,30 @@ export default function Home() {
       groups[item.category].push(item);
     });
 
-    // Se ordino per titolo, ordino solo i prodotti dentro ogni categoria, categorie restano fisse
     if (sortField === 'title') {
       for (const cat in groups) {
         groups[cat].sort((a, b) => {
-          if (sortOrder === 'asc') return a.title.localeCompare(b.title);
-          else return b.title.localeCompare(a.title);
+          return sortOrder === 'asc'
+            ? a.title.localeCompare(b.title)
+            : b.title.localeCompare(a.title);
         });
       }
 
-      // Ritorno array con categorie in ordine fisso
       return categoryOrderFixed
-        .filter(cat => groups[cat])  // prendo solo quelle presenti
+        .filter(cat => groups[cat])
         .map(cat => ({ category: cat, items: groups[cat] }));
 
     } else if (sortField === 'category') {
-      // Ordino le categorie in base al sortOrder
       const catsSorted = Object.keys(groups).sort((a, b) => {
-        if (sortOrder === 'asc') return a.localeCompare(b);
-        else return b.localeCompare(a);
+        return sortOrder === 'asc'
+          ? a.localeCompare(b)
+          : b.localeCompare(a);
       });
 
-      // Per ogni categoria inserisco gli items (puoi decidere se ordinarli o no)
-      return catsSorted.map(cat => ({ category: cat, items: groups[cat] }));
+      return catsSorted.map(cat => ({
+        category: cat,
+        items: groups[cat]
+      }));
     }
 
     return [];
@@ -75,7 +75,9 @@ export default function Home() {
           <div key={group.category}>
             <h2>{group.category}</h2>
             <div className="category-section">
-              {group.items.map(item => <ItemCard key={item.id} item={item} />)}
+              {group.items.map(item => (
+                <ItemCard key={item.id} item={item} />
+              ))}
             </div>
           </div>
         )

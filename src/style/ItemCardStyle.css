@@ -1,0 +1,29 @@
+
+.item-card.card .item-card-image {
+  width: 200px;      /* o qualsiasi larghezza desideri */
+  height: 300px;     /* altezza fissa *//* ritaglia l'immagine per riempire */
+  object-position: center;
+  border-radius: 8px;
+  display: block;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.item-card.etb .item-card-image {
+  width: 300px;      /* o qualsiasi larghezza desideri */
+  height: 300px;     /* altezza fissa *//* ritaglia l'immagine per riempire */
+  object-position: center;
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.item-card.loose_pack .item-card-image {
+  width: 300px;      /* o qualsiasi larghezza desideri */
+  height: 300px;     /* altezza fissa *//* ritaglia l'immagine per riempire */
+  object-position: center;
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
