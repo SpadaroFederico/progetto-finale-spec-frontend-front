@@ -1,7 +1,17 @@
 import React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import '../style/NavBarStyle.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHome, faStar } from '@fortawesome/free-solid-svg-icons';
+import { useGlobalContext } from '../context/GlobalContext';
+import logo from '../assets/icon.jpg'
 
-const NavBar = ({ search, setSearch, sortField, setSortField, sortOrder, setSortOrder, favorites, compareItems }) => {
+const NavBar = ({
+  search, setSearch,
+  sortField, setSortField,
+  sortOrder, setSortOrder,
+  favorites, compareItems
+}) => {
   const navigate = useNavigate();
 
   const handleGoToCompare = () => {
@@ -13,45 +23,39 @@ const NavBar = ({ search, setSearch, sortField, setSortField, sortOrder, setSort
   };
 
   return (
-    <nav style={{ padding: '1rem', borderBottom: '1px solid #ccc' }}>
-      <input
-        type="text"
-        placeholder="Cerca un prodotto..."
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        style={{ marginRight: '1rem' }}
-      />
+    <nav className="navbar">
+      <div className="nav-left">
+         <img src={logo} alt="Logo" className="nav-logo" />
+        <Link to="/" className="site-title">LaSbustiamoo?</Link>
+      </div>
 
-      <label>
-        Ordina per:&nbsp;
-        <select
-          value={sortField}
-          onChange={(e) => setSortField(e.target.value)}
-          style={{ marginRight: '1rem' }}
-        >
+      <div className="nav-center">
+        <input
+          type="text"
+          placeholder="Cerca un prodotto..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        <select value={sortField} onChange={(e) => setSortField(e.target.value)}>
           <option value="title">Titolo</option>
           <option value="category">Categoria</option>
         </select>
-      </label>
-
-      <label>
-        Ordine:&nbsp;
-        <select
-          value={sortOrder}
-          onChange={(e) => setSortOrder(e.target.value)}
-        >
+        <select value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}>
           <option value="asc">A-Z</option>
           <option value="desc">Z-A</option>
         </select>
-      </label>
+      </div>
 
-      <button onClick={handleGoToCompare} style={{ marginLeft: '1rem' }}>
-        Vai a confronto
-      </button>
+      <div className="nav-right">
+        <button onClick={handleGoToCompare}>Confronta</button>
 
-      <Link to="/favorites" style={{ marginLeft: '1rem', textDecoration: 'none' }}>
-        ⭐ Preferiti ({favorites.length})
-      </Link>
+        <Link to="/favorites" className="badge-icon">
+          <FontAwesomeIcon icon={faStar} />
+          {favorites.length > 0 && (
+            <span className="badge">{favorites.length}</span>
+          )}
+        </Link>
+      </div>
     </nav>
   );
 };

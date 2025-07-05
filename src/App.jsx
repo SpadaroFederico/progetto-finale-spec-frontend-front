@@ -4,6 +4,7 @@ import { GlobalProvider } from "./context/GlobalContext";
 import { BrowserRouter } from "react-router-dom";
 
 
+
 function App() {
   return (
     <GlobalProvider>

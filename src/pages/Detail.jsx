@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, Navigate } from 'react-router-dom';
 import { useGlobalContext } from '../context/GlobalContext';
+import '../style/DetailStyle.css'; 
 
 export default function Detail() {
   const { id } = useParams();
@@ -52,7 +53,7 @@ export default function Detail() {
   };
 
   return (
-    <div style={{ padding: '1rem' }}>
+    <div className="detail-container" style={{ padding: '1rem' }}>
       <h1>{product.title}</h1>
       <img 
         src={product.image || 'https://via.placeholder.com/300x200?text=No+Image'} 
@@ -76,7 +77,7 @@ export default function Detail() {
       </button>
 
       {message && (
-        <p style={{ color: compareLimitReached ? 'red' : 'green', marginTop: '1rem' }}>
+        <p className="detail-message" style={{ color: compareLimitReached ? 'red' : 'green', marginTop: '1rem' }}>
           {message}
         </p>
       )}

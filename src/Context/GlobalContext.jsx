@@ -7,6 +7,7 @@ export function GlobalProvider({ children }) {
   const [items, setItems] = useState([]);
   const [favorites, setFavorites] = useState([]);
   const [compareItems, setCompareItems] = useState([]);
+  const [compareMessage, setCompareMessage] = useState(null); // ✅ nuovo
 
   const [search, setSearch] = useState('');
   const [sortField, setSortField] = useState('title');
@@ -57,17 +58,26 @@ export function GlobalProvider({ children }) {
   }, []);
 
   const addToCompare = (item) => {
-    if (compareItems.some(i => i.id === item.id)) return;
-    if (compareItems.length >= 4) return; // Max 4
-    const updated = [...compareItems, item];
-    setCompareItems(updated);
-    localStorage.setItem('compareItems', JSON.stringify(updated));
+    if (compareItems.some(i => i.id === item.id)) {
+      setCompareMessage('⚠️ Prodotto già presente nel confronto.');
+    } else if (compareItems.length >= 4) {
+      setCompareMessage('❌ Puoi confrontare al massimo 4 prodotti.');
+    } else {
+      const updated = [...compareItems, item];
+      setCompareItems(updated);
+      localStorage.setItem('compareItems', JSON.stringify(updated));
+      setCompareMessage('✅ Prodotto aggiunto al confronto!');
+    }
+
+    setTimeout(() => setCompareMessage(null), 3000); // ⏱️
   };
 
   const removeFromCompare = (id) => {
     const updated = compareItems.filter(i => i.id !== id);
     setCompareItems(updated);
     localStorage.setItem('compareItems', JSON.stringify(updated));
+    setCompareMessage('🗑️ Prodotto rimosso dal confronto.');
+    setTimeout(() => setCompareMessage(null), 3000);
   };
 
   const isInCompare = (id) => {
@@ -94,6 +104,7 @@ export function GlobalProvider({ children }) {
       setSortField,
       sortOrder,
       setSortOrder,
+      compareMessage 
     }}>
       {children}
     </GlobalContext.Provider>
