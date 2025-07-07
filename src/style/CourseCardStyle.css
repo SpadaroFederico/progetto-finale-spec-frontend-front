@@ -45,3 +45,55 @@
   text-align: center;
   color: #4a4a4a;
 }
+
+/* --- CARD CORSI (esisteva già) ------------------------------ */
+.item-card.course-card {
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 1rem;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,.06);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.item-card.course-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0,0,0,.1);
+}
+.item-card.course-card .item-card-image {
+  width: 100%;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: .75rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,.08);
+}
+
+/* --- PULSANTI sotto la card -------------------------------- */
+.course-card-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: .5rem;
+}
+.course-card-buttons button {
+  flex: 1 1 0;
+  padding: .45rem .6rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color .2s ease;
+}
+.course-card-buttons button:first-child {          /* Modifica */
+  background-color: #3E7586;   /* blu-teal */
+  color: #fff;
+}
+.course-card-buttons button:first-child:hover {
+  background-color: #325e6c;
+}
+.course-card-buttons button:last-child {           /* Elimina  */
+  background-color: #c94a4a;
+  color: #fff;
+}
+.course-card-buttons button:last-child:hover {
+  background-color: #a83838;
+}

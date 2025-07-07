@@ -1,4 +1,3 @@
-// Import delle pagine e dei componenti necessari
 import { Routes, Route } from 'react-router-dom';
 import Home from '../pages/Home.jsx';
 import NotFound from '../pages/NotFound.jsx';
@@ -10,9 +9,15 @@ import CourseDetail from '../pages/CourseDetail.jsx';
 import { useGlobalContext } from '../context/GlobalContext.jsx';
 import NavBar from '../components/NavBar.jsx';
 import Jumbotron from '../components/Jumbotron';
+import CourseCreate from '../pages/CourseCreate.jsx';
+import CourseEdit from '../pages/CourseEdit.jsx';
 
+/**
+ * Router principale dell'applicazione.
+ * Gestisce la navigazione tra le varie pagine e passa le props necessarie alla NavBar.
+ */
 function AppRouter() {
-  // Recupera stato globale dal context
+  // Recupera stato globale dal context per la NavBar
   const {
     search,
     setSearch,
@@ -38,16 +43,25 @@ function AppRouter() {
         compareItems={compareItems}
       />
 
+      {/* Jumbotron/banner principale */}
       <Jumbotron />
 
       {/* Definizione delle rotte dell'applicazione */}
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/pokemonItems/:id' element={<Detail />} />
+
+        {/* Rotte per la gestione dei corsi */}
         <Route path='/courses' element={<Courses />} />
+        <Route path='/courses/new' element={<CourseCreate />} />
         <Route path='/courses/:id' element={<CourseDetail />} />
-        <Route path='favorites' element={<Favorites />} />
-        <Route path='compare' element={<Compare />} />
+        <Route path='/courses/:id/edit' element={<CourseEdit />} />
+
+        {/* Rotte per preferiti e confronto */}
+        <Route path='/favorites' element={<Favorites />} />
+        <Route path='/compare' element={<Compare />} />
+
+        {/* Rotta di fallback per pagine non trovate */}
         <Route path='*' element={<NotFound />} />
       </Routes>
     </>
@@ -55,4 +69,3 @@ function AppRouter() {
 }
 
 export default AppRouter;
-

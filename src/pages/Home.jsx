@@ -6,6 +6,10 @@ import '../style/HomeStyle.css';
 // Ordine fisso delle categorie
 const categoryOrderFixed = ["card", "etb", "loose_pack", "display"];
 
+/**
+ * Pagina principale che mostra la lista dei prodotti raggruppati per categoria.
+ * Permette ricerca, ordinamento e scrolling orizzontale per ogni categoria.
+ */
 export default function Home() {
   // Recupera stato globale dal context
   const {
@@ -38,7 +42,7 @@ export default function Home() {
     );
   }, [items, search]);
 
-  // Raggruppa e ordina gli items per categoria e titolo
+  // Raggruppa e ordina gli items per categoria e titolo/categoria
   const groupedItems = useMemo(() => {
     const groups = {};
 
@@ -62,7 +66,7 @@ export default function Home() {
         .map(cat => ({ category: cat, items: groups[cat] }));
     }
 
-    // Ordinamento per categoria
+    // Ordinamento per categoria (alfabetico)
     if (sortField === 'category') {
       const catsSorted = Object.keys(groups).sort((a, b) =>
         sortOrder === 'asc'
@@ -80,11 +84,10 @@ export default function Home() {
 
   return (
     <div>
-
+      {/* Banner per messaggi di confronto */}
       {compareMessage && (
-  <div className="compare-message-banner">{compareMessage}</div>
-)}
-
+        <div className="compare-message-banner">{compareMessage}</div>
+      )}
 
       <h1>Lista prodotti</h1>
 

@@ -1,0 +1,35 @@
+[
+  {
+    "title": "Corso Pokémon TCG - Principianti",
+    "category": "pokemon",
+    "description": "Impara le basi del gioco di carte Pokémon.",
+    "duration": 5,
+    "difficulty": "beginner",
+    "image": "http://localhost:3001/images/courses/pokemon-course.jpg",
+    "id": 1,
+    "createdAt": "2025-07-07T13:31:34.658Z",
+    "updatedAt": "2025-07-07T13:31:34.658Z"
+  },
+  {
+    "title": "Corso Yu-Gi-Oh! - Tecniche Avanzate",
+    "category": "yu-gi-oh",
+    "description": "Scopri strategie avanzate per dominare i duelli.",
+    "duration": 8,
+    "difficulty": "advanced",
+    "image": "http://localhost:3001/images/courses/yu-gi-ho-course.jpg",
+    "id": 2,
+    "createdAt": "2025-07-07T13:32:34.884Z",
+    "updatedAt": "2025-07-07T13:32:34.884Z"
+  },
+  {
+    "title": "Corso One Piece Card Game - Introduzione",
+    "category": "onepiece",
+    "description": "Inizia a giocare al card game ufficiale di One Piece.",
+    "duration": 4,
+    "difficulty": "beginner",
+    "image": "http://localhost:3001/images/courses/one-piece-course.jpg",
+    "id": 3,
+    "createdAt": "2025-07-07T13:33:02.318Z",
+    "updatedAt": "2025-07-07T13:33:02.318Z"
+  }
+]

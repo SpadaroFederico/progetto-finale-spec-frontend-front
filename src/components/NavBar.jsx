@@ -4,8 +4,12 @@ import '../style/NavBarStyle.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faStar } from '@fortawesome/free-solid-svg-icons';
 import { useGlobalContext } from '../context/GlobalContext';
-import logo from '../assets/icon.jpg'
+import logo from '../assets/icon.jpg';
 
+/**
+ * Barra di navigazione principale dell'applicazione.
+ * Permette ricerca, ordinamento, accesso ai corsi, confronto e preferiti.
+ */
 const NavBar = ({
   search, setSearch,
   sortField, setSortField,
@@ -14,6 +18,11 @@ const NavBar = ({
 }) => {
   const navigate = useNavigate();
 
+  /**
+   * Gestisce il click sul pulsante "Confronta".
+   * Se non ci sono prodotti selezionati, mostra un alert.
+   * Altrimenti naviga alla pagina di confronto.
+   */
   const handleGoToCompare = () => {
     if (compareItems.length === 0) {
       alert('Nessun prodotto selezionato per il confronto');
@@ -24,11 +33,13 @@ const NavBar = ({
 
   return (
     <nav className="navbar">
+      {/* Sezione sinistra: logo e titolo */}
       <div className="nav-left">
-         <img src={logo} alt="Logo" className="nav-logo" />
+        <img src={logo} alt="Logo" className="nav-logo" />
         <Link to="/" className="site-title">LaSbustiamoo?</Link>
       </div>
 
+      {/* Sezione centrale: ricerca e ordinamento */}
       <div className="nav-center">
         <input
           type="text"
@@ -46,14 +57,17 @@ const NavBar = ({
         </select>
       </div>
 
+      {/* Sezione destra: pulsanti corsi, confronto e preferiti */}
       <div className="nav-right">
+        {/* Pulsante per la pagina corsi */}
+        <Link to="/courses">
+          <button className="courses-btn">Corsi</button>
+        </Link>
 
-<Link to="/courses">
-    <button className="courses-btn">Corsi</button>
-  </Link>
-
+        {/* Pulsante per la pagina di confronto */}
         <button onClick={handleGoToCompare}>Confronta</button>
 
+        {/* Icona preferiti con badge numerico */}
         <Link to="/favorites" className="badge-icon">
           <FontAwesomeIcon icon={faStar} />
           {favorites.length > 0 && (

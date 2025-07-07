@@ -1,0 +1,67 @@
+/* CONTENITORE form */
+.course-form-wrapper {
+  max-width: 600px;
+  margin: 2rem auto;
+  background: #fff;
+  padding: 1.5rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.05);
+}
+
+/* GRIGLIA semplice per label + input (mobile‑first) */
+.course-form-wrapper form > div {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+.course-form-wrapper label {
+  font-weight: 600;
+  margin-bottom: .35rem;
+  color: #2C3E50;
+}
+.course-form-wrapper input,
+.course-form-wrapper textarea,
+.course-form-wrapper select {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: .5rem .65rem;
+  font-size: .95rem;
+  background: #fafafa;
+  transition: border-color .2s ease, background .2s ease;
+}
+.course-form-wrapper input:focus,
+.course-form-wrapper textarea:focus,
+.course-form-wrapper select:focus {
+  outline: none;
+  border-color: #3E7586;
+  background: #fff;
+}
+.course-form-wrapper textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+/* ERRORI di validazione */
+.course-form-wrapper small {
+  color: #c94a4a;
+  margin-top: .25rem;
+}
+
+/* BOTTONI SALVA / INDISPONIBILE */
+.course-form-wrapper button[type="submit"] {
+  background: #3E7586;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: .6rem 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .2s ease;
+}
+.course-form-wrapper button[disabled] {
+  opacity: .6;
+  cursor: not-allowed;
+}
+.course-form-wrapper button:not([disabled]):hover {
+  background: #325e6c;
+}
