@@ -1,0 +1,40 @@
+/* Estensione per dettaglio corso */
+.detail-container.course {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  color: #1f2a36;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.detail-container.course h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+/* Immagine corso grande, responsiva e 16:9 */
+.detail-container.course img {
+  width: 100%;
+  max-width: 640px;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.5rem;
+}
+
+/* Info */
+.detail-container.course p {
+  font-size: 1.05rem;
+  margin: 0.4rem 0;
+  text-align: left;
+  width: 100%;
+  max-width: 600px;
+  line-height: 1.6;
+}

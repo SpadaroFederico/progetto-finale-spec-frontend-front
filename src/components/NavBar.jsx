@@ -47,6 +47,11 @@ const NavBar = ({
       </div>
 
       <div className="nav-right">
+
+<Link to="/courses">
+    <button className="courses-btn">Corsi</button>
+  </Link>
+
         <button onClick={handleGoToCompare}>Confronta</button>
 
         <Link to="/favorites" className="badge-icon">

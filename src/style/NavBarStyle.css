@@ -122,3 +122,16 @@ nav a.active {
   font-weight: bold;
   text-align: center;
 }
+
+.courses-btn {
+  background-color: #c49e3f;
+  color: white;
+  border: none;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.courses-btn:hover {
+  background-color: #a47d2a;
+  cursor: pointer;
+}

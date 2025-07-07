@@ -6,6 +6,7 @@ export const useGlobalContext = () => useContext(GlobalContext);
 export function GlobalProvider({ children }) {
   const [items, setItems] = useState([]);
   const [favorites, setFavorites] = useState([]);
+  const [courses, setCourses] = useState([]);
   const [compareItems, setCompareItems] = useState([]);
   const [compareMessage, setCompareMessage] = useState(null); // ✅ nuovo
 
@@ -29,6 +30,24 @@ export function GlobalProvider({ children }) {
       setItems(detailedItems.map(item => item.pokemonitem));
     } catch (error) {
       console.error('❌ Errore nel fetch degli items completi:', error);
+    }
+  };
+
+   // Fetch Courses
+  const fetchFullCourses = async () => {
+    try {
+      const res = await fetch(`${API_URL}/courses`);
+      const basicCourses = await res.json();
+
+      const detailedCourses = await Promise.all(
+        basicCourses.map(course =>
+          fetch(`${API_URL}/courses/${course.id}`).then(res => res.json())
+        )
+      );
+
+      setCourses(detailedCourses.map(c => c.course));
+    } catch (error) {
+      console.error('❌ Errore nel fetch dei corsi completi:', error);
     }
   };
 
@@ -86,12 +105,14 @@ export function GlobalProvider({ children }) {
 
   useEffect(() => {
     fetchFullItems();
+    fetchFullCourses();
   }, []);
 
   return (
     <GlobalContext.Provider value={{
       items,
       favorites,
+      courses,
       addToFavorites,
       removeFromFavorites,
       compareItems,

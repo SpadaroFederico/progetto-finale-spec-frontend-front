@@ -5,6 +5,8 @@ import NotFound from '../pages/NotFound.jsx';
 import Detail from '../pages/Detail.jsx';
 import Compare from '../pages/Compare.jsx';
 import Favorites from '../pages/Favorites.jsx';
+import Courses from '../pages/Courses.jsx';
+import CourseDetail from '../pages/CourseDetail.jsx';
 import { useGlobalContext } from '../context/GlobalContext.jsx';
 import NavBar from '../components/NavBar.jsx';
 import Jumbotron from '../components/Jumbotron';
@@ -42,6 +44,8 @@ function AppRouter() {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/pokemonItems/:id' element={<Detail />} />
+        <Route path='/courses' element={<Courses />} />
+        <Route path='/courses/:id' element={<CourseDetail />} />
         <Route path='favorites' element={<Favorites />} />
         <Route path='compare' element={<Compare />} />
         <Route path='*' element={<NotFound />} />
