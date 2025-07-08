@@ -21,7 +21,6 @@ export function GlobalProvider({ children }) {
   const [compareMessage, setCompareMessage] = useState(null);
 
   // Stato per ricerca e ordinamento
-  const [search, setSearch] = useState('');
   const [sortField, setSortField] = useState('title');
   const [sortOrder, setSortOrder] = useState('asc');
 
@@ -193,8 +192,6 @@ export function GlobalProvider({ children }) {
       addToCompare,
       removeFromCompare,
       isInCompare,
-      search,
-      setSearch,
       sortField,
       setSortField,
       sortOrder,

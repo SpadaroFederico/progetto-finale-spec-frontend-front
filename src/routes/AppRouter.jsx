@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Home from '../pages/Home.jsx';
 import NotFound from '../pages/NotFound.jsx';
@@ -6,21 +7,14 @@ import Compare from '../pages/Compare.jsx';
 import Favorites from '../pages/Favorites.jsx';
 import Courses from '../pages/Courses.jsx';
 import CourseDetail from '../pages/CourseDetail.jsx';
+import CourseCreate from '../pages/CourseCreate.jsx';
+import CourseEdit from '../pages/CourseEdit.jsx';
 import { useGlobalContext } from '../context/GlobalContext.jsx';
 import NavBar from '../components/NavBar.jsx';
 import Jumbotron from '../components/Jumbotron';
-import CourseCreate from '../pages/CourseCreate.jsx';
-import CourseEdit from '../pages/CourseEdit.jsx';
 
-/**
- * Router principale dell'applicazione.
- * Gestisce la navigazione tra le varie pagine e passa le props necessarie alla NavBar.
- */
 function AppRouter() {
-  // Recupera stato globale dal context per la NavBar
   const {
-    search,
-    setSearch,
     sortField,
     setSortField,
     sortOrder,
@@ -29,12 +23,22 @@ function AppRouter() {
     compareItems,
   } = useGlobalContext();
 
+  // 🔧 Ricerca debounced qui
+  const [searchInput, setSearchInput] = useState('');
+  const [debouncedSearch, setDebouncedSearch] = useState('');
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearch(searchInput);
+    }, 500);
+    return () => clearTimeout(handler);
+  }, [searchInput]);
+
   return (
     <>
-      {/* Barra di navigazione globale */}
       <NavBar
-        search={search}
-        setSearch={setSearch}
+        search={searchInput}
+        setSearch={setSearchInput}
         sortField={sortField}
         setSortField={setSortField}
         sortOrder={sortOrder}
@@ -43,25 +47,18 @@ function AppRouter() {
         compareItems={compareItems}
       />
 
-      {/* Jumbotron/banner principale */}
       <Jumbotron />
 
-      {/* Definizione delle rotte dell'applicazione */}
       <Routes>
-        <Route path='/' element={<Home />} />
+        {/* Passa search a Home */}
+        <Route path='/' element={<Home search={debouncedSearch} />} />
         <Route path='/pokemonItems/:id' element={<Detail />} />
-
-        {/* Rotte per la gestione dei corsi */}
         <Route path='/courses' element={<Courses />} />
         <Route path='/courses/new' element={<CourseCreate />} />
         <Route path='/courses/:id' element={<CourseDetail />} />
         <Route path='/courses/:id/edit' element={<CourseEdit />} />
-
-        {/* Rotte per preferiti e confronto */}
         <Route path='/favorites' element={<Favorites />} />
         <Route path='/compare' element={<Compare />} />
-
-        {/* Rotta di fallback per pagine non trovate */}
         <Route path='*' element={<NotFound />} />
       </Routes>
     </>
