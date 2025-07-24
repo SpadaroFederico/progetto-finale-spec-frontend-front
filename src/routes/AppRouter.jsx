@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Home from '../pages/Home.jsx';
 import NotFound from '../pages/NotFound.jsx';
@@ -27,18 +27,34 @@ function AppRouter() {
   const [searchInput, setSearchInput] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
 
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedSearch(searchInput);
-    }, 500);
-    return () => clearTimeout(handler);
-  }, [searchInput]);
+  function debounce(callback, delay) {
+  let timer;
+  return (value) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      callback(value);
+    }, delay);
+  };
+}
 
+    // debounce con useCallback → così non si ricrea a ogni render
+  const debouncedUpdate = useCallback(
+    debounce((valore) => {
+      setDebouncedSearch(valore);
+    }, 500),
+    [] // viene creata una volta sola
+  );
+
+  // Ogni volta che cambia l’input, chiamiamo sia setSearchInput che debounce
+  const handleSearch = (val) => {
+    setSearchInput(val);
+    debouncedUpdate(val);
+  };
   return (
     <>
       <NavBar
         search={searchInput}
-        setSearch={setSearchInput}
+        setSearch={handleSearch}
         sortField={sortField}
         setSortField={setSortField}
         sortOrder={sortOrder}
